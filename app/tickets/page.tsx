@@ -5,7 +5,6 @@ const TicketsPage = () => {
   return (
     <div>
       <div>Ticket pages here</div>
-      <Button>Click me</Button>
     </div>
   );
 };
