@@ -33,7 +33,7 @@ export default function RootLayout({
         <Theme accentColor='purple' grayColor='mauve'>
           <Navbar />
           <main className='p-5'>{children}</main>
-          <ThemePanel />
+          {/* <ThemePanel /> */}
         </Theme>
       </body>
     </html>
