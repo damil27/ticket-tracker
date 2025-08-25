@@ -9,11 +9,14 @@ import { useRouter } from 'next/navigation';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { CreateTicketsSchema } from '@/app/CreateTicketsSchema';
 import { z } from 'zod';
+import ErrorMessage from '@/app/components/errorMessage';
+import Spinner from '@/app/components/spinner';
 
 type TicketForm = z.infer<typeof CreateTicketsSchema>;
 
 const NewTicketPage = () => {
   const [error, setError] = useState<string | null>('');
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const router = useRouter();
 
   const {
@@ -48,18 +51,20 @@ const NewTicketPage = () => {
         className='max-w-xl space-y-3'
         onSubmit={handleSubmit(async (data) => {
           try {
+            setIsSubmitting(true);
             const res = await axios.post('/api/tickets', data);
             router.push('/tickets');
           } catch (error) {
             // console.log(error);
+            setIsSubmitting(false);
             setError('Something went wrong, please try again later');
           }
         })}
       >
         <TextField.Root placeholder='Enter a title' {...register('title')} />
-        {errors.title && (
-          <Text className='text-red-500 text-sm'>{errors.title.message}</Text>
-        )}
+
+        <ErrorMessage>{errors.title?.message}</ErrorMessage>
+
         <Controller
           name='description'
           control={control}
@@ -67,12 +72,13 @@ const NewTicketPage = () => {
             <SimpleMdeReact {...field} options={simpleMdeOptions} />
           )}
         />
-        {errors.description && (
-          <Text className='text-red-500 text-sm' as='p'>
-            {errors.description.message}
-          </Text>
-        )}
-        <Button> Submit Ticket</Button>
+
+        <ErrorMessage>{errors.description?.message}</ErrorMessage>
+
+        <Button disabled={isSubmitting}>
+          {' '}
+          Submit Ticket {isSubmitting && <Spinner />}{' '}
+        </Button>
       </form>
     </div>
   );
