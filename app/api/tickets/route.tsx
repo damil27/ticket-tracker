@@ -1,11 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { prisma } from '../../lib/prisma';
-import { z } from 'zod';
+import { CreateTicketsSchema } from '../../CreateTicketsSchema';
 
-const CreateTicketsSchema = z.object({
-  title: z.string().min(3, 'Title must be at least 3 characters').max(255),
-  description: z.string().min(1, 'Description is required'),
-});
 export async function POST(request: NextRequest) {
   const body = await request.json();
   const validation = CreateTicketsSchema.safeParse(body);
