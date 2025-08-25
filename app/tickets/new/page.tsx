@@ -33,12 +33,21 @@ const NewTicketPage = () => {
       autofocus: false,
       placeholder: 'Enter a description',
       status: false,
-      //   toolbar: ["bold", "italic", "heading", "|", "quote", "unordered-list", "ordered-list", "|", "link", "preview"],
       forceSync: true,
-      //   hideIcons: ["side-by-side", "fullscreen"],
     }),
     []
   );
+
+  const onSubmit = handleSubmit(async (data) => {
+    try {
+      setIsSubmitting(true);
+      const res = await axios.post('/api/tickets', data);
+      router.push('/tickets');
+    } catch (error) {
+      setIsSubmitting(false);
+      setError('Something went wrong, please try again later');
+    }
+  });
 
   return (
     <div className='mb-4 max-w-xl'>
@@ -47,20 +56,7 @@ const NewTicketPage = () => {
           <Callout.Text color='red'>{error}</Callout.Text>
         </Callout.Root>
       )}
-      <form
-        className='max-w-xl space-y-3'
-        onSubmit={handleSubmit(async (data) => {
-          try {
-            setIsSubmitting(true);
-            const res = await axios.post('/api/tickets', data);
-            router.push('/tickets');
-          } catch (error) {
-            // console.log(error);
-            setIsSubmitting(false);
-            setError('Something went wrong, please try again later');
-          }
-        })}
-      >
+      <form className='max-w-xl space-y-3' onSubmit={onSubmit}>
         <TextField.Root placeholder='Enter a title' {...register('title')} />
 
         <ErrorMessage>{errors.title?.message}</ErrorMessage>
