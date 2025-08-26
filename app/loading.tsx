@@ -1,16 +1,14 @@
-import Link from 'next/link';
-import { Button, Table } from '@radix-ui/themes';
-import { prisma } from './lib/prisma';
-import TicketBadge from './components/ticketBadge';
-import delay from 'delay';
+import { Table } from '@radix-ui/themes';
+import React from 'react';
+import Skeleton from 'react-loading-skeleton';
+import 'react-loading-skeleton/dist/skeleton.css';
 import TicketAction from './tickets/ticketAction';
 
-export default async function Home() {
-  const tickets = await prisma.ticket.findMany();
-  await delay(2000);
+const TicketLoadingPage = () => {
+  const tickets = [1, 2, 3, 4, 5];
   return (
-    <div className=''>
-      <TicketAction />
+    <div>
+        <TicketAction />
       <Table.Root variant='surface'>
         <Table.Header>
           <Table.Row>
@@ -26,19 +24,19 @@ export default async function Home() {
         </Table.Header>
         <Table.Body>
           {tickets.map((ticket) => (
-            <Table.Row key={ticket.id}>
+            <Table.Row key={ticket}>
               {/* <Table.Cell>{ticket.id}</Table.Cell> */}
               <Table.Cell>
-                {ticket.title}
+                <Skeleton />
                 <div className='md:hidden text-sm text-zinc-500'>
-                  <TicketBadge status={ticket.status} />
+                  <Skeleton />
                 </div>
               </Table.Cell>
               <Table.Cell className='hidden md:table-cell'>
-                <TicketBadge status={ticket.status} />
+                <Skeleton />
               </Table.Cell>
               <Table.Cell className='hidden md:table-cell'>
-                {ticket.createdAt.toDateString()}
+                <Skeleton />
               </Table.Cell>
             </Table.Row>
           ))}
@@ -46,4 +44,6 @@ export default async function Home() {
       </Table.Root>
     </div>
   );
-}
+};
+
+export default TicketLoadingPage;
