@@ -4,7 +4,7 @@ import React from 'react';
 
 const TicketAction = () => {
   return (
-    <div>
+    <div className='mb-4 '>
       <Button>
         {' '}
         <Link href='/tickets/new'> New Ticket</Link>
