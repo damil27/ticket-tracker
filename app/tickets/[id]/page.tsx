@@ -2,6 +2,7 @@ import TicketBadge from '@/app/components/ticketBadge';
 import { prisma } from '@/app/lib/prisma';
 import { Card, Flex, Heading, Text } from '@radix-ui/themes';
 import React from 'react';
+import ReactMarkdown from 'react-markdown';
 
 const TecketDetailsPage = async ({ params }: { params: { id: string } }) => {
   const ticket = await prisma.ticket.findUnique({
@@ -15,8 +16,8 @@ const TecketDetailsPage = async ({ params }: { params: { id: string } }) => {
         <TicketBadge status={ticket?.status!} />
         <Text>Ticket Created At : {ticket?.createdAt.toDateString()}</Text>
       </Flex>
-      <Card>
-        <Text>Ticket Description : {ticket?.description}</Text>
+      <Card className='prose'>
+        <ReactMarkdown>{ticket?.description}</ReactMarkdown>
       </Card>
     </div>
   );
