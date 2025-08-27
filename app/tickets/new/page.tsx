@@ -1,7 +1,7 @@
 'use client';
 import { Button, Callout, Text, TextField } from '@radix-ui/themes';
 import { useForm, Controller } from 'react-hook-form';
-import SimpleMDE, { SimpleMdeReact } from 'react-simplemde-editor';
+// import SimpleMDE, { SimpleMdeReact } from 'react-simplemde-editor';
 import axios from 'axios';
 import 'easymde/dist/easymde.min.css';
 import { useMemo, useState } from 'react';
@@ -11,6 +11,11 @@ import { CreateTicketsSchema } from '@/app/CreateTicketsSchema';
 import { z } from 'zod';
 import ErrorMessage from '@/app/components/errorMessage';
 import Spinner from '@/app/components/spinner';
+import dynamic from 'next/dynamic';
+ const SimpleMdeReact = dynamic(() => import('react-simplemde-editor'), {
+   ssr: false,
+   loading: () => <p>Loading ...</p>,
+ });
 
 type TicketForm = z.infer<typeof CreateTicketsSchema>;
 
