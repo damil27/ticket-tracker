@@ -1,16 +1,20 @@
 import TicketBadge from '@/app/components/ticketBadge';
 import { prisma } from '@/app/lib/prisma';
-import { Card, Flex, Heading, Text } from '@radix-ui/themes';
+import { Box, Card, Flex, Heading, Text } from '@radix-ui/themes';
+import { notFound } from 'next/navigation';
 import React from 'react';
 import ReactMarkdown from 'react-markdown';
+import delay from 'delay';
 
 const TecketDetailsPage = async ({ params }: { params: { id: string } }) => {
   const ticket = await prisma.ticket.findUnique({
     where: { id: parseInt(params.id) },
   });
 
+  if (!ticket) return notFound();
+
   return (
-    <div>
+    <Box className='max-w-xl'>
       <Heading>Ticket: {ticket?.title}</Heading>
       <Flex gap='2' align='center' className='mb-4'>
         <Text>
@@ -26,7 +30,7 @@ const TecketDetailsPage = async ({ params }: { params: { id: string } }) => {
           {ticket?.description || 'No description provided'}
         </ReactMarkdown>
       </Card>
-    </div>
+    </Box>
   );
 };
 
