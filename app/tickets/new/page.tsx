@@ -1,17 +1,17 @@
 'use client';
-import { Button, Callout, Text, TextField } from '@radix-ui/themes';
-import { useForm, Controller } from 'react-hook-form';
-// import SimpleMDE, { SimpleMdeReact } from 'react-simplemde-editor';
+import { Button, Callout, TextField } from '@radix-ui/themes';
+import { Controller, useForm } from 'react-hook-form';
+import { ErrorMessage, Spinner } from '@/app/components';
+import { CreateTicketsSchema } from '@/app/CreateTicketsSchema';
+import { zodResolver } from '@hookform/resolvers/zod';
 import axios from 'axios';
 import 'easymde/dist/easymde.min.css';
-import { useMemo, useState } from 'react';
-import { useRouter } from 'next/navigation';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { CreateTicketsSchema } from '@/app/CreateTicketsSchema';
-import { z } from 'zod';
-import ErrorMessage from '@/app/components/errorMessage';
-import Spinner from '@/app/components/spinner';
 import dynamic from 'next/dynamic';
+import { useRouter } from 'next/navigation';
+import { useMemo, useState } from 'react';
+import { z } from 'zod';
+
+
  const SimpleMdeReact = dynamic(() => import('react-simplemde-editor'), {
    ssr: false,
    loading: () => <p>Loading ...</p>,

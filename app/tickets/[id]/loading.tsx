@@ -1,9 +1,6 @@
-import TicketBadge from '@/app/components/ticketBadge';
-import { Heading, Flex, Card, Text } from '@radix-ui/themes';
-import React from 'react';
-import ReactMarkdown from 'react-markdown';
-import Skeleton from 'react-loading-skeleton';
-import 'react-loading-skeleton/dist/skeleton.css';
+import { Skeleton } from '@/app/components';
+import { Card, Flex } from '@radix-ui/themes';
+
 
 const DetailsPageLoader = () => {
   return (

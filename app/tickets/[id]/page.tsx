@@ -1,10 +1,8 @@
-import TicketBadge from '@/app/components/ticketBadge';
+import { TicketBadge } from '@/app/components';
 import { prisma } from '@/app/lib/prisma';
 import { Box, Card, Flex, Heading, Text } from '@radix-ui/themes';
 import { notFound } from 'next/navigation';
-import React from 'react';
 import ReactMarkdown from 'react-markdown';
-import delay from 'delay';
 
 const TecketDetailsPage = async ({ params }: { params: { id: string } }) => {
   const ticket = await prisma.ticket.findUnique({
